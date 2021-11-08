@@ -1,0 +1,46 @@
+import { Schema, model, Document } from 'mongoose'
+
+export interface IIncomeExpence {
+  [key: string]: number
+}
+
+export interface IProperty extends Document {
+  propertyId: number
+  propertyName: string
+  income: IIncomeExpence
+  expense: IIncomeExpence
+}
+
+const IncomeExpenseSchema = new Schema({
+  January: { type: Number },
+  February: { type: Number },
+  March: { type: Number },
+  April: { type: Number },
+  May: { type: Number },
+  June: { type: Number },
+  July: { type: Number },
+  August: { type: Number },
+  September: { type: Number },
+  October: { type: Number },
+  November: { type: Number },
+  December: { type: Number },
+})
+
+const PropertySchema = new Schema(
+  {
+    propertyId: { type: String, required: true, unique: true },
+    propertyName: { type: String, required: true },
+    income: IncomeExpenseSchema,
+    expense: IncomeExpenseSchema,
+  },
+  {
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+    collection: 'Property',
+  }
+)
+
+// Indexes
+PropertySchema.index({ propertyId: 1 })
+PropertySchema.index({ propertyName: 1 })
+
+export default model<IProperty>('Property', PropertySchema)

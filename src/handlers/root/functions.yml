@@ -1,0 +1,8 @@
+# API root route
+root:
+  handler: ${self:custom.root}/root/functions/root/root.handler
+  events:
+    - http:
+        path: ${self:custom.apiPrefix}
+        method: get
+        cors: true

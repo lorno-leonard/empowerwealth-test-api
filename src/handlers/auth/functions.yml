@@ -1,0 +1,26 @@
+# Login
+login:
+  handler: ${self:custom.root}/auth/functions/login/login.handler
+  events:
+    - http:
+        path: ${self:custom.apiPrefix}/auth/login
+        method: post
+        cors: true
+
+# Register
+register:
+  handler: ${self:custom.root}/auth/functions/register/register.handler
+  events:
+    - http:
+        path: ${self:custom.apiPrefix}/auth/register
+        method: post
+        cors: true
+
+# Verify token
+verify-token:
+  handler: ${self:custom.root}/auth/functions/verify-token/verify-token.handler
+  events:
+    - http:
+        path: ${self:custom.apiPrefix}/auth/verify-token
+        method: post
+        cors: true

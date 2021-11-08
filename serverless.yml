@@ -1,0 +1,36 @@
+# Realty Labs API
+service: realty-labs-api
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'development'}
+  region: ${env:SERVERLESS_REGION}
+  # Uncomment on local development
+  # profile: ${env:SERVERLESS_PROFILE}
+  stackName: ${self:service}-${self:provider.stage}
+  lambdaHashingVersion: 20201221
+  apiName: ${self:service}-${self:provider.stage}
+  apiGateway:
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    STAGE: ${self:provider.stage}
+
+functions:
+  - ${file(./src/handlers/root/functions.yml)}
+  - ${file(./src/handlers/auth/functions.yml)}
+
+custom:
+  root: 'src/handlers'
+  apiPrefix: '/api/v1'
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    packager: 'npm'
+
+plugins:
+  - serverless-webpack
+  - serverless-offline

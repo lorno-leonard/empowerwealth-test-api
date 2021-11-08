@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@constants/*": ["src/constants/*"],
+      "@handlers/*": ["src/handlers/*"],
+      "@libs/*": ["src/libs/*"],
+      "@models/*": ["src/models/*"],
+      "@services/*": ["src/services/*"]
+    }
+  }
+}
