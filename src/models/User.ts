@@ -16,7 +16,7 @@ const UserSchema: Schema = new Schema<IUser>(
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-    collection: 'User',
+    collection: 'user',
   }
 )
 
@@ -36,4 +36,4 @@ UserSchema.methods.validPassword = function (password) {
 // Indexes
 UserSchema.index({ email: 1 })
 
-export default model<IUser>('User', UserSchema)
+export default model<IUser>('user', UserSchema)
