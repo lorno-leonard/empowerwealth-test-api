@@ -1,6 +1,7 @@
 import type { APIGatewayProxyEvent } from 'aws-lambda'
 import faker from 'faker'
 
+import { StatusCode } from '@libs/apiGateway'
 import PropertyData, { IPropertyData } from '@models/PropertyData'
 import mongoClient from '@services/mongo/client'
 import { getProperties } from './get-properties'
@@ -64,7 +65,7 @@ describe('GET /property', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(200)
+      expect(statusCode).toBe(StatusCode.OK)
       expect(body?.message).toBe('Successfully retrieved properties')
       expect(body?.properties.length).toBe(POPULATE_COUNT)
       body?.properties.forEach((property: IPropertyData) => {

@@ -1,6 +1,7 @@
 import type { Context, Callback } from 'aws-lambda'
 import faker from 'faker'
 
+import { StatusCode } from '@libs/apiGateway'
 import type { ValidatedAPIGatewayProxyEvent } from '@libs/apiGateway'
 import mongoClient from '@services/mongo/client'
 import schema from '../../schemas/register'
@@ -26,7 +27,7 @@ describe('POST /auth/register', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(400)
+      expect(statusCode).toBe(StatusCode.BAD_REQUEST)
       expect(
         body?.error?.message.includes('must have required property')
       ).toBeTruthy()
@@ -40,7 +41,7 @@ describe('POST /auth/register', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(200)
+      expect(statusCode).toBe(StatusCode.OK)
       expect(body?.message).toBe('Successfully registered')
     }
   })
@@ -52,7 +53,7 @@ describe('POST /auth/register', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(400)
+      expect(statusCode).toBe(StatusCode.BAD_REQUEST)
       expect(body?.error?.message).toBe('Email is already taken')
     }
   })

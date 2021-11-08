@@ -2,6 +2,7 @@ import type { Context, Callback } from 'aws-lambda'
 import faker from 'faker'
 import { pick } from 'ramda'
 
+import { StatusCode } from '@libs/apiGateway'
 import type { ValidatedAPIGatewayProxyEvent } from '@libs/apiGateway'
 import User from '@models/User'
 import mongoClient from '@services/mongo/client'
@@ -41,7 +42,7 @@ describe('POST /auth/login', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(400)
+      expect(statusCode).toBe(StatusCode.BAD_REQUEST)
       expect(
         body?.error?.message.includes('must have required property')
       ).toBeTruthy()
@@ -57,7 +58,7 @@ describe('POST /auth/login', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(200)
+      expect(statusCode).toBe(StatusCode.OK)
       expect(body?.message).toBe('Successfully logged in')
       expect(body?.token).not.toBeUndefined()
       expect(body?.token).not.toBeNull()
@@ -76,7 +77,7 @@ describe('POST /auth/login', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(400)
+      expect(statusCode).toBe(StatusCode.BAD_REQUEST)
       expect(body?.error?.message).toBe('Invalid email or password')
     }
   })
@@ -93,7 +94,7 @@ describe('POST /auth/login', () => {
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      expect(statusCode).toBe(400)
+      expect(statusCode).toBe(StatusCode.BAD_REQUEST)
       expect(body?.error?.message).toBe('Invalid email or password')
     }
   })
