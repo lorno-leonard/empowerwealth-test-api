@@ -4,7 +4,7 @@ export interface IIncomeExpence {
   [key: string]: number
 }
 
-export interface IProperty extends Document {
+export interface IPropertyData extends Document {
   propertyId: number
   propertyName: string
   income: IIncomeExpence
@@ -26,7 +26,7 @@ const IncomeExpenseSchema = new Schema({
   December: { type: Number },
 })
 
-const PropertySchema = new Schema(
+const PropertyDataSchema = new Schema(
   {
     propertyId: { type: String, required: true, unique: true },
     propertyName: { type: String, required: true },
@@ -35,12 +35,12 @@ const PropertySchema = new Schema(
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-    collection: 'Property',
+    collection: 'propertyData',
   }
 )
 
 // Indexes
-PropertySchema.index({ propertyId: 1 })
-PropertySchema.index({ propertyName: 1 })
+PropertyDataSchema.index({ propertyId: 1 })
+PropertyDataSchema.index({ propertyName: 1 })
 
-export default model<IProperty>('Property', PropertySchema)
+export default model<IPropertyData>('propertyData', PropertyDataSchema)
