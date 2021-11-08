@@ -7,11 +7,11 @@ get-properties:
         method: get
         cors: true
 
-# # Get single property
-# get-single-property:
-#   handler: ${self:custom.root}/property/functions/get-single-property/get-single-property.handler
-#   events:
-#     - http:
-#         path: ${self:custom.apiPrefix}/property/{id}
-#         method: get
-#         cors: true
+# Get single property
+get-single-property:
+  handler: ${self:custom.root}/property/functions/get-single-property/get-single-property.handler
+  events:
+    - http:
+        path: ${self:custom.apiPrefix}/property/{id}
+        method: get
+        cors: true
