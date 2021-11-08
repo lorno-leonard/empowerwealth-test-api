@@ -9,6 +9,6 @@ describe('GET /', () => {
     const body = JSON.parse(jsonBody)
 
     expect(statusCode).toBe(200)
-    expect(body?.message).toBe('Realty Labs API service')
+    expect(body?.message).toBe('Empower Wealth Test API service')
   })
 })

@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'test') {
   config = {
     host: process.env.MONGODB_URI || '',
     options: {
-      dbName: process.env.MONGODB_DB || 'realty-labs-dev',
+      dbName: process.env.MONGODB_DB || 'empowerwealth-test-dev',
       useNewUrlParser: true,
     },
   }

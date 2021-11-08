@@ -6,7 +6,7 @@ import { middyfy } from '@libs/lambda'
 export const root = async () => {
   try {
     return success({
-      message: 'Realty Labs API service',
+      message: 'Empower Wealth Test API service',
     })
   } catch (exception: any) {
     return error(exception)

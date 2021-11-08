@@ -1,5 +1,5 @@
-# Realty Labs API
-service: realty-labs-api
+# Empower Wealth Test API
+service: empowerwealth-test-api
 useDotenv: true
 
 provider:
