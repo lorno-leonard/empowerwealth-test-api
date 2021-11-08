@@ -28,7 +28,7 @@ const IncomeExpenseSchema = new Schema({
 
 const PropertyDataSchema = new Schema(
   {
-    propertyId: { type: String, required: true, unique: true },
+    propertyId: { type: Number, required: true, unique: true },
     propertyName: { type: String, required: true },
     income: IncomeExpenseSchema,
     expense: IncomeExpenseSchema,
