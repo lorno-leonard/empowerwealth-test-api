@@ -18,6 +18,9 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     STAGE: ${self:provider.stage}
+    MONGODB_URI: ${env:MONGODB_URI}
+    MONGODB_DB: ${env:MONGODB_DB}
+    JWT_SECRET: ${env:JWT_SECRET}
 
 functions:
   - ${file(./src/handlers/root/functions.yml)}

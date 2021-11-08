@@ -49,3 +49,4 @@ jobs:
           SERVERLESS_REGION: ${{ secrets.AWS_REGION }}
           MONGODB_URI: ${{ secrets.DEVELOP_MONGODB_URI }}
           MONGODB_DB: ${{ secrets.DEVELOP_MONGODB_DB }}
+          JWT_SECRET: ${{ secrets.DEVELOP_JWT_SECRET }}
