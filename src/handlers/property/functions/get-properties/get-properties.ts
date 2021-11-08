@@ -14,7 +14,10 @@ export const getProperties = async (
     await mongoClient.connect()
 
     // Get properties
-    const properties = await PropertyData.find()
+    const properties = await PropertyData.find().select({
+      propertyId: 1,
+      propertyName: 1,
+    })
 
     return success({
       message: 'Successfully retrieved properties',

@@ -1,9 +1,11 @@
 import type { APIGatewayProxyEvent } from 'aws-lambda'
 import faker from 'faker'
 
-import PropertyData from '@models/PropertyData'
+import PropertyData, { IPropertyData } from '@models/PropertyData'
 import mongoClient from '@services/mongo/client'
 import { getProperties } from './get-properties'
+
+const POPULATE_COUNT = 10
 
 afterAll(async () => {
   await mongoClient.disconnect()
@@ -15,7 +17,7 @@ describe('GET /property', () => {
 
     // Create properties
     let i = 0
-    while (i < 10) {
+    while (i < POPULATE_COUNT) {
       const property = await new PropertyData()
       property.propertyId = faker.datatype.number({ min: 100000, max: 999999 })
       property.propertyName = faker.address.streetAddress()
@@ -55,16 +57,22 @@ describe('GET /property', () => {
     await mongoClient.disconnect()
   })
 
-  it('it should get a list of properties', async () => {
+  it('it should get a list of properties with only propertyId and propertyName props', async () => {
     const event = {} as APIGatewayProxyEvent
 
     const response = await getProperties(event)
     if (response) {
       const { body: jsonBody, statusCode } = response
       const body = JSON.parse(jsonBody)
-      console.log(body)
       expect(statusCode).toBe(200)
       expect(body?.message).toBe('Successfully retrieved properties')
+      expect(body?.properties.length).toBe(POPULATE_COUNT)
+      body?.properties.forEach((property: IPropertyData) => {
+        expect(property).toHaveProperty('propertyId')
+        expect(property).toHaveProperty('propertyName')
+        expect(property).not.toHaveProperty('income')
+        expect(property).not.toHaveProperty('expense')
+      })
     }
   })
 })
