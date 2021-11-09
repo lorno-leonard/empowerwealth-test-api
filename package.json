@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run serve:watch",
     "serve:watch": "nodemon -e js,ts,jsx,tsx -x npm run serve",
-    "serve": "serverless offline start --httpPort 4000 --stage development",
+    "serve": "serverless offline start --httpPort 4000 --stage development --useChildProcesses",
     "deploy": "npm run deploy:development",
     "deploy:env": "sls deploy --stage $NODE_ENV --verbose",
     "deploy:development": "export NODE_ENV=development && npm run deploy:env",
