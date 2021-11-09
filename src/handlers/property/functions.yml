@@ -6,6 +6,7 @@ get-properties:
         path: ${self:custom.apiPrefix}/property
         method: get
         cors: true
+        authorizer: authorize
 
 # Get single property
 get-single-property:
@@ -15,3 +16,4 @@ get-single-property:
         path: ${self:custom.apiPrefix}/property/{id}
         method: get
         cors: true
+        authorizer: authorize
