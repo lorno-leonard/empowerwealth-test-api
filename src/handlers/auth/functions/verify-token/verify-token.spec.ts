@@ -15,7 +15,7 @@ import { login } from './../login/login'
 
 const context = {} as Context
 const callback: Callback = (): void => {}
-const body = {
+const data = {
   email: faker.internet.exampleEmail(),
   password: faker.internet.password(),
   name: faker.name.findName(),
@@ -33,9 +33,9 @@ describe('POST /auth/verify-token', () => {
 
     // Create user
     const user = await new User()
-    user.email = body.email
-    user.name = body.name
-    user.password = body.password
+    user.email = data.email
+    user.name = data.name
+    user.password = data.password
     await user.save()
 
     await mongoClient.disconnect()
@@ -57,7 +57,7 @@ describe('POST /auth/verify-token', () => {
 
   it('it should succeed to login', async () => {
     const event = {
-      body: pick(['email', 'password'], body),
+      body: pick(['email', 'password'], data),
     } as ValidatedAPIGatewayProxyEvent<typeof loginSchema>
 
     const response = await login(event, context, callback)
@@ -66,9 +66,10 @@ describe('POST /auth/verify-token', () => {
       const body = JSON.parse(jsonBody)
       expect(statusCode).toBe(StatusCode.OK)
       expect(body?.message).toBe('Successfully logged in')
-      expect(body?.token).not.toBeUndefined()
-      expect(body?.token).not.toBeNull()
-      token = body?.token
+      expect(body?.data?.email).toBe(data.email)
+      expect(body?.data?.token).not.toBeUndefined()
+      expect(body?.data?.token).not.toBeNull()
+      token = body?.data?.token
     }
   })
 
