@@ -11,7 +11,7 @@ import { login } from './login'
 
 const context = {} as Context
 const callback: Callback = (): void => {}
-const body = {
+const data = {
   email: faker.internet.exampleEmail(),
   password: faker.internet.password(),
   name: faker.name.findName(),
@@ -27,9 +27,9 @@ describe('POST /auth/login', () => {
 
     // Create user
     const user = await new User()
-    user.email = body.email
-    user.name = body.name
-    user.password = body.password
+    user.email = data.email
+    user.name = data.name
+    user.password = data.password
     await user.save()
 
     await mongoClient.disconnect()
@@ -51,7 +51,7 @@ describe('POST /auth/login', () => {
 
   it('it should succeed if body parameters are existing', async () => {
     const event = {
-      body: pick(['email', 'password'], body),
+      body: pick(['email', 'password'], data),
     } as ValidatedAPIGatewayProxyEvent<typeof schema>
 
     const response = await login(event, context, callback)
@@ -60,15 +60,16 @@ describe('POST /auth/login', () => {
       const body = JSON.parse(jsonBody)
       expect(statusCode).toBe(StatusCode.OK)
       expect(body?.message).toBe('Successfully logged in')
-      expect(body?.token).not.toBeUndefined()
-      expect(body?.token).not.toBeNull()
+      expect(body?.data?.email).toBe(data.email)
+      expect(body?.data?.token).not.toBeUndefined()
+      expect(body?.data?.token).not.toBeNull()
     }
   })
 
   it('it should fail if wrong password is used', async () => {
     const event = {
       body: {
-        email: body.email,
+        email: data.email,
         password: faker.internet.password(),
       },
     } as ValidatedAPIGatewayProxyEvent<typeof schema>

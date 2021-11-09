@@ -39,10 +39,14 @@ export const login: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
       throw errorResponse('Invalid email or password', StatusCode.BAD_REQUEST)
     }
 
-    const token = generateToken(pick(['id', 'name', 'email'], checkUser))
+    const payload = pick(['id', 'name', 'email'], checkUser)
+    const token = generateToken(payload)
     return success({
       message: 'Successfully logged in',
-      token,
+      data: {
+        ...payload,
+        token,
+      },
     })
   } catch (exception: any) {
     return error(exception)
