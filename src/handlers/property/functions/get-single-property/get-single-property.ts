@@ -32,6 +32,9 @@ export const getSingleProperty = async (
     })
   } catch (exception: any) {
     return error(exception)
+  } finally {
+    // Disconnect to database
+    await mongoClient.disconnect()
   }
 }
 
