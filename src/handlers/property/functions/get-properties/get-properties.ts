@@ -19,7 +19,7 @@ export const getProperties = async (
       propertyId: 1,
       propertyName: 1,
     })
-
+    console.log({ properties })
     return success({
       message: 'Successfully retrieved properties',
       properties,
