@@ -1,4 +1,6 @@
-import { generateToken, isTokenVerified } from './jwt'
+import { JwtPayload } from 'jsonwebtoken'
+
+import { generateToken, isTokenVerified, verifyToken } from './jwt'
 
 describe('generate and validate token', () => {
   const data = { email: 'foo@bar' }
@@ -13,6 +15,10 @@ describe('generate and validate token', () => {
   test('it should verify generated token', () => {
     const isVerified = isTokenVerified(token)
     expect(isVerified).toBeTruthy()
+
+    const context = verifyToken(token)
+    expect(context).toHaveProperty('email')
+    expect({ ...(context as JwtPayload) }.email).toBe(data.email)
   })
 
   test('it should not verify fake token', () => {

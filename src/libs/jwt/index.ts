@@ -1,3 +1,3 @@
-import { generateToken, isTokenVerified } from './jwt'
+import { generateToken, isTokenVerified, verifyToken } from './jwt'
 
-export { generateToken, isTokenVerified }
+export { generateToken, isTokenVerified, verifyToken }
