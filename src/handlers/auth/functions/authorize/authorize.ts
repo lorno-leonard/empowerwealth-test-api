@@ -1,6 +1,7 @@
 import 'source-map-support/register'
 import type { APIGatewayTokenAuthorizerEvent } from 'aws-lambda'
 import trim from 'lodash/trim'
+import { pick } from 'ramda'
 
 import { AuthResponse, AuthUser } from '@libs/apiGateway'
 import { middyfy } from '@libs/lambda'
@@ -43,7 +44,7 @@ export const authorize = async (
 async function authenticate(token: string): Promise<AuthUser> {
   if (isTokenVerified(token)) {
     const payload = verifyToken(token)
-    return payload as AuthUser
+    return pick(['id', 'email', 'name'], payload) as AuthUser
   }
 
   throw new Error('Passed authentication is not supported')
