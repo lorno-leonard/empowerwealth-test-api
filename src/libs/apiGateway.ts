@@ -19,6 +19,27 @@ export type ValidatedEventAPIGatewayProxyEvent<S> = Handler<
   APIGatewayProxyResult
 >
 
+export type AuthUser = {
+  id: string
+  email: string
+  name?: string
+}
+
+export type AuthResponse = {
+  principalId: string
+  policyDocument: {
+    Version: string
+    Statement: [
+      {
+        Action: string
+        Effect: 'Allow' | 'Deny'
+        Resource: string
+      }
+    ]
+  }
+  context?: AuthUser
+}
+
 export const formatJSONResponse = (response: Record<string, unknown>) => {
   return {
     statusCode: 200,

@@ -1,3 +1,7 @@
+# Authorize
+authorize:
+  handler: ${self:custom.root}/auth/functions/authorize/authorize.handler
+
 # Login
 login:
   handler: ${self:custom.root}/auth/functions/login/login.handler
