@@ -27,6 +27,9 @@ export const getProperties = async (
   } catch (exception: any) {
     console.log({ exception })
     return error(exception)
+  } finally {
+    // Disconnet to database
+    await mongoClient.disconnect()
   }
 }
 
