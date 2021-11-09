@@ -46,6 +46,9 @@ export const login: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
     })
   } catch (exception: any) {
     return error(exception)
+  } finally {
+    // Disconnect to database
+    await mongoClient.disconnect()
   }
 }
 
